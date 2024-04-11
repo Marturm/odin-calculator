@@ -1,9 +1,11 @@
-let a, b, operator, displayValue;
+let a, b; 
+let operator = null;
+let displayValue = "0";
 
 const display = document.querySelector(".display");
 
-function populateDisplay(value) {
-    display.innerText = value;
+function populateDisplay() {
+    display.innerText = displayValue;
 }
 
 function add(a, b) {
@@ -35,6 +37,18 @@ function operate(a, b, operator) {
     }
 }
 
+const btnAC = document.querySelector(".button-ac");
+
+btnAC.addEventListener("click", () => {
+    operator = null;
+    a = null;
+    b = null;
+    displayValue = "0";
+    populateDisplay()
+});
+
+// const btnPoint = document.querySelector(".button-point");
+// const btnEqual = document.querySelector(".button-equal"); 
 
 const btnNine = document.querySelector(".button-nine");
 const btnEight = document.querySelector(".button-eight");
@@ -47,15 +61,27 @@ const btnTwo = document.querySelector(".button-two");
 const btnOne = document.querySelector(".button-one");
 const btnZero = document.querySelector(".button-zero");
 
-const btnAC = document.querySelector(".button-ac");
+const btnNumbers = [btnZero, btnOne, btnTwo, btnThree, btnFour, btnFive, btnSix, btnSeven, btnEight, btnNine];
 
-const btnEqual = document.querySelector(".button-equal");
+btnNumbers.forEach((btn) => {
+    btn.addEventListener("click", () => {
+        if(displayValue.length == 1 && displayValue == "0") {
+            displayValue = btn.getAttribute("data-number");
+        }
+        else if(displayValue.length < 9){
+            displayValue += btn.getAttribute("data-number");
+        }
+        
+        populateDisplay();
+    });
+})
 
 const btnAdd = document.querySelector(".button-add");
 const btnMultiply = document.querySelector(".button-multiply");
 const btnSubtract = document.querySelector(".button-subtract");
 const btnDivide = document.querySelector(".button-divide");
 
-const btnPoint = document.querySelector(".button-point");
+const btnOperators = [btnAdd, btnMultiply, btnSubtract, btnDivide];
+
 
 
