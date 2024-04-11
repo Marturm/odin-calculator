@@ -1,5 +1,6 @@
-let a, b; 
+let numbers = [];
 let operator = null;
+let currentValue = 0;
 let displayValue = "0";
 
 const display = document.querySelector(".display");
@@ -40,15 +41,14 @@ function operate(a, b, operator) {
 const btnAC = document.querySelector(".button-ac");
 
 btnAC.addEventListener("click", () => {
+    numbers = [];
     operator = null;
-    a = null;
-    b = null;
+    currentValue = 0;
     displayValue = "0";
     populateDisplay()
 });
 
 // const btnPoint = document.querySelector(".button-point");
-// const btnEqual = document.querySelector(".button-equal"); 
 
 const btnNine = document.querySelector(".button-nine");
 const btnEight = document.querySelector(".button-eight");
@@ -65,13 +65,16 @@ const btnNumbers = [btnZero, btnOne, btnTwo, btnThree, btnFour, btnFive, btnSix,
 
 btnNumbers.forEach((btn) => {
     btn.addEventListener("click", () => {
-        if(displayValue.length == 1 && displayValue == "0") {
+        if(currentValue === null) {
+            displayValue = btn.getAttribute("data-number");
+        }
+        else if(displayValue.length == 1 && displayValue == "0") {
             displayValue = btn.getAttribute("data-number");
         }
         else if(displayValue.length < 9){
             displayValue += btn.getAttribute("data-number");
         }
-        
+            currentValue = Number(displayValue);
         populateDisplay();
     });
 })
@@ -83,5 +86,12 @@ const btnDivide = document.querySelector(".button-divide");
 
 const btnOperators = [btnAdd, btnMultiply, btnSubtract, btnDivide];
 
+btnOperators.forEach((btn) => {
+    btn.addEventListener("click", () => {
+        numbers.push(currentValue);
+        operator = btn.getAttribute("data-operator");
+        currentValue = null;
+    })
+});
 
 
