@@ -40,13 +40,15 @@ function operate(a, b, operator) {
 
 const btnAC = document.querySelector(".button-ac");
 
-btnAC.addEventListener("click", () => {
+function clear() {
     numbers = [];
     operator = null;
     currentValue = 0;
     displayValue = "0";
     populateDisplay()
-});
+}
+
+btnAC.addEventListener("click", clear);
 
 // const btnPoint = document.querySelector(".button-point");
 
@@ -63,6 +65,7 @@ const btnZero = document.querySelector(".button-zero");
 
 const btnNumbers = [btnZero, btnOne, btnTwo, btnThree, btnFour, btnFive, btnSix, btnSeven, btnEight, btnNine];
 
+//
 btnNumbers.forEach((btn) => {
     btn.addEventListener("click", () => {
         if(currentValue === null) {
@@ -94,4 +97,19 @@ btnOperators.forEach((btn) => {
     })
 });
 
+function calculate() {
+    let lastValue = numbers[numbers.length - 1];
+    let result = operate(lastValue, currentValue, operator);
+    displayValue = result;
+    populateDisplay();
+
+    numbers.push(currentValue);
+    numbers.push(result);
+    currentValue = result;
+
+    operator = null;
+}
+
+const btnEqual = document.querySelector(".button-equal"); 
+btnEqual.addEventListener("click", calculate);
 
