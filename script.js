@@ -1,4 +1,9 @@
-let currentNumber = null, operationNumber = null, operator = null, result = null;
+let currentNumber = null, 
+    operationNumber = null, 
+    operatorNumber = null,
+    operator = false, 
+    operatorValue = null, 
+    result = null;
 
 const display = document.querySelector(".display");
 function populateDisplay(displayValue) {
@@ -7,8 +12,14 @@ function populateDisplay(displayValue) {
 
 const btnAC = document.querySelector(".button-ac");
 btnAC.addEventListener("click", () => {
-    currentNumber = null, operationNumber = null, operator = null, result = null;
+    currentNumber = null, 
+    operationNumber = null, 
+    operatorNumber = null,
+    operator = false, 
+    operatorValue = null, 
+    result = null;
     populateDisplay(0)
+    console.clear();
 });
 
 const btnNine = document.querySelector(".button-nine");
@@ -25,7 +36,24 @@ const btnNumbers = [btnZero, btnOne, btnTwo, btnThree, btnFour, btnFive, btnSix,
 
 btnNumbers.forEach((btn) => {
     btn.addEventListener("click", () => {
-        
+        let enteredNumber = btn.getAttribute("data-number");
+
+        if(currentNumber === null || currentNumber == 0) {
+            currentNumber = enteredNumber;
+        }
+        else if(currentNumber.length < 9){
+            currentNumber += enteredNumber;
+        }
+        populateDisplay(currentNumber);
+
+        if(!operator) {
+            operationNumber = currentNumber;
+            console.log("operationNumber:", operationNumber)
+        }
+        else {
+            operatorNumber = currentNumber;
+            console.log("operatorNumber:", operatorNumber)
+        }
     });
 });
 
@@ -37,7 +65,10 @@ const btnOperators = [btnAdd, btnMultiply, btnSubtract, btnDivide];
 
 btnOperators.forEach((btn) => {
     btn.addEventListener("click", () => {
-        
+        operatorValue = btn.getAttribute("data-operator");
+        operator = true;
+        currentNumber = 0;
+        console.log("operatorValue:", operatorValue);
     });
 });
 
@@ -73,5 +104,18 @@ function operate(a, b, operator) {
 }
 
 btnEqual.addEventListener("click", () => {
+    operationNumber = Number(operationNumber);
+    operatorNumber = Number(operatorNumber);
+    result = operate(operationNumber, operatorNumber, operatorValue);
+    operationNumber = String(result);
+    console.log("result: ", result)
+
+    currentNumber = 0;
+    operator = false;
     
+    console.log("operationNumber: ", operationNumber)
+    console.log("operatorNumber: ", operatorNumber)
+    console.log("operatorValue: ", operatorValue)
+
+    populateDisplay(operationNumber);
 });
