@@ -1,13 +1,46 @@
-let numbers = [];
-let operator = null;
-let currentValue = 0;
-let displayValue = "0";
+let currentNumber = null, b = null, operator = null, result = null;
 
 const display = document.querySelector(".display");
-
-function populateDisplay() {
+function populateDisplay(displayValue) {
     display.innerText = displayValue;
 }
+
+const btnAC = document.querySelector(".button-ac");
+btnAC.addEventListener("click", () => {
+    currentNumber = null, b = null, operator = null, result = null;
+    populateDisplay(0)
+});
+
+const btnNine = document.querySelector(".button-nine");
+const btnEight = document.querySelector(".button-eight");
+const btnSeven = document.querySelector(".button-seven");
+const btnSix = document.querySelector(".button-six");
+const btnFive = document.querySelector(".button-five");
+const btnFour = document.querySelector(".button-four");
+const btnThree = document.querySelector(".button-three");
+const btnTwo = document.querySelector(".button-two");
+const btnOne = document.querySelector(".button-one");
+const btnZero = document.querySelector(".button-zero");
+const btnNumbers = [btnZero, btnOne, btnTwo, btnThree, btnFour, btnFive, btnSix, btnSeven, btnEight, btnNine];
+
+btnNumbers.forEach((btn) => {
+    btn.addEventListener("click", () => {
+        if(currentNumber === null || currentNumber == 0) {
+            currentNumber = btn.getAttribute("data-number");
+        }
+        else if(currentNumber.length < 9){
+            currentNumber += btn.getAttribute("data-number");
+        }
+        console.log("currentNumber: ", currentNumber);
+        populateDisplay(currentNumber);
+    });
+});
+
+const btnAdd = document.querySelector(".button-add");
+const btnMultiply = document.querySelector(".button-multiply");
+const btnSubtract = document.querySelector(".button-subtract");
+const btnDivide = document.querySelector(".button-divide");
+const btnOperators = [btnAdd, btnMultiply, btnSubtract, btnDivide];
 
 function add(a, b) {
     return a + b;
@@ -38,78 +71,11 @@ function operate(a, b, operator) {
     }
 }
 
-const btnAC = document.querySelector(".button-ac");
-
-function clear() {
-    numbers = [];
-    operator = null;
-    currentValue = 0;
-    displayValue = "0";
-    populateDisplay()
-}
-
-btnAC.addEventListener("click", clear);
-
-// const btnPoint = document.querySelector(".button-point");
-
-const btnNine = document.querySelector(".button-nine");
-const btnEight = document.querySelector(".button-eight");
-const btnSeven = document.querySelector(".button-seven");
-const btnSix = document.querySelector(".button-six");
-const btnFive = document.querySelector(".button-five");
-const btnFour = document.querySelector(".button-four");
-const btnThree = document.querySelector(".button-three");
-const btnTwo = document.querySelector(".button-two");
-const btnOne = document.querySelector(".button-one");
-const btnZero = document.querySelector(".button-zero");
-
-const btnNumbers = [btnZero, btnOne, btnTwo, btnThree, btnFour, btnFive, btnSix, btnSeven, btnEight, btnNine];
-
-//
-btnNumbers.forEach((btn) => {
-    btn.addEventListener("click", () => {
-        if(currentValue === null) {
-            displayValue = btn.getAttribute("data-number");
-        }
-        else if(displayValue.length == 1 && displayValue == "0") {
-            displayValue = btn.getAttribute("data-number");
-        }
-        else if(displayValue.length < 9){
-            displayValue += btn.getAttribute("data-number");
-        }
-            currentValue = Number(displayValue);
-        populateDisplay();
-    });
-})
-
-const btnAdd = document.querySelector(".button-add");
-const btnMultiply = document.querySelector(".button-multiply");
-const btnSubtract = document.querySelector(".button-subtract");
-const btnDivide = document.querySelector(".button-divide");
-
-const btnOperators = [btnAdd, btnMultiply, btnSubtract, btnDivide];
-
 btnOperators.forEach((btn) => {
     btn.addEventListener("click", () => {
-        numbers.push(currentValue);
         operator = btn.getAttribute("data-operator");
-        currentValue = null;
-    })
+        console.log("operator:", operator);
+    });
 });
 
-function calculate() {
-    let lastValue = numbers[numbers.length - 1];
-    let result = operate(lastValue, currentValue, operator);
-    displayValue = result;
-    populateDisplay();
-
-    numbers.push(currentValue);
-    numbers.push(result);
-    currentValue = result;
-
-    operator = null;
-}
-
 const btnEqual = document.querySelector(".button-equal"); 
-btnEqual.addEventListener("click", calculate);
-
