@@ -1,4 +1,4 @@
-let currentNumber = null, previousNumber = null, operator = null, result = null;
+let currentNumber = null, operationNumber = null, operator = null, result = null;
 
 const display = document.querySelector(".display");
 function populateDisplay(displayValue) {
@@ -7,7 +7,7 @@ function populateDisplay(displayValue) {
 
 const btnAC = document.querySelector(".button-ac");
 btnAC.addEventListener("click", () => {
-    currentNumber = null, previousNumber = null, operator = null, result = null;
+    currentNumber = null, operationNumber = null, operator = null, result = null;
     populateDisplay(0)
 });
 
@@ -25,16 +25,7 @@ const btnNumbers = [btnZero, btnOne, btnTwo, btnThree, btnFour, btnFive, btnSix,
 
 btnNumbers.forEach((btn) => {
     btn.addEventListener("click", () => {
-        if(currentNumber === null || currentNumber == 0 || result != null) {
-            currentNumber = btn.getAttribute("data-number");
-            result = null;
-        }
-        else if(currentNumber.length < 9){
-            currentNumber += btn.getAttribute("data-number");
-        }
-
-        console.log("currentNumber: ", currentNumber);
-        populateDisplay(currentNumber);
+        
     });
 });
 
@@ -46,16 +37,7 @@ const btnOperators = [btnAdd, btnMultiply, btnSubtract, btnDivide];
 
 btnOperators.forEach((btn) => {
     btn.addEventListener("click", () => {
-        operator = btn.getAttribute("data-operator");
-
-        if(previousNumber === null) {
-            previousNumber = currentNumber;
-            currentNumber = null;
-        }
-
-        console.log("operator:", operator);
-        console.log("previousNumber: ", previousNumber);
-        console.log("currentNumber: ", currentNumber);
+        
     });
 });
 
@@ -91,23 +73,5 @@ function operate(a, b, operator) {
 }
 
 btnEqual.addEventListener("click", () => {
-    previousNumber = Number(previousNumber);
-    currentNumber = Number(currentNumber);
-
-    result = operate(previousNumber, currentNumber, operator);
-    result = String(result).slice(0, 9);    
     
-    previousNumber = String(previousNumber);
-    currentNumber = String(currentNumber);
-
-    // if(result === 'undefined' || result === 'NaN'){
-    //     result = 0;
-    // }
-    
-    previousNumber = result;
-    
-    populateDisplay(previousNumber);  
-    console.log("operator:", operator);
-    console.log("previousNumber: ", previousNumber);
-    console.log("currentNumber: ", currentNumber);
 });
