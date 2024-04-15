@@ -65,6 +65,9 @@ const btnOperators = [btnAdd, btnMultiply, btnSubtract, btnDivide];
 
 btnOperators.forEach((btn) => {
     btn.addEventListener("click", () => {
+        if(operator) {
+            btnEqual.dispatchEvent(new Event('click'))
+        }
         operatorValue = btn.getAttribute("data-operator");
         operator = true;
         currentNumber = 0;
@@ -108,7 +111,12 @@ btnEqual.addEventListener("click", () => {
     operatorNumber = Number(operatorNumber);
     currentNumber = 0;
     operator = false;
-    if(operatorValue != '/' && operatorNumber != 0) {
+    if(operatorValue == '/' && operatorNumber == 0) {
+        result = 0;
+        populateDisplay("ERROR");
+        operationNumber = 0;
+    }
+    else {
         result = operate(operationNumber, operatorNumber, operatorValue);
         
         if(result === undefined) {
@@ -135,12 +143,6 @@ btnEqual.addEventListener("click", () => {
             populateDisplay(result);
         }
     }
-    else {
-        result = 0;
-        populateDisplay("ERROR");
-    }
-
-
     
     console.log("operationNumber: ", operationNumber)
     console.log("operatorNumber: ", operatorNumber)
