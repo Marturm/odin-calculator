@@ -22,6 +22,25 @@ btnAC.addEventListener("click", () => {
     console.clear();
 });
 
+const btnBack = document.querySelector(".button-backspace");
+btnBack.addEventListener("click", () => {
+    if(display.innerText.length > 1) {
+        currentNumber = currentNumber.slice(0, -1);
+    }
+    else{
+        currentNumber = 0;
+    }
+    if(!operator) {
+        operationNumber = currentNumber;
+        console.log("operationNumber:", operationNumber)
+    }
+    else {
+        operatorNumber = currentNumber;
+        console.log("operatorNumber:", operatorNumber)
+    }
+    populateDisplay(currentNumber);
+});
+
 const btnNine = document.querySelector(".button-nine");
 const btnEight = document.querySelector(".button-eight");
 const btnSeven = document.querySelector(".button-seven");
