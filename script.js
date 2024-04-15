@@ -106,29 +106,42 @@ function operate(a, b, operator) {
 btnEqual.addEventListener("click", () => {
     operationNumber = Number(operationNumber);
     operatorNumber = Number(operatorNumber);
-    result = operate(operationNumber, operatorNumber, operatorValue);
     currentNumber = 0;
     operator = false;
-
-    if(String(result).length > 9) {
-        result = result.toFixed(8);
-        if(result == 0) {
+    if(operatorValue != '/' && operatorNumber != 0) {
+        result = operate(operationNumber, operatorNumber, operatorValue);
+        
+        if(result === undefined) {
             result = 0;
         }
+
+        if(String(result).length > 9) {
+            result = result.toFixed(8);
+            if(result == 0) {
+                result = 0;
+            }
+        }
+
+        operationNumber = String(result);
+        console.log("result: ", result)
+
+        if(result > 999999999){
+            result = Number.parseFloat(result).toExponential(3);
+        }
+        else if(String(result).length > 9) {
+            result = String(result).slice(0, 10);
+        }
+        else {
+            populateDisplay(result);
+        }
+    }
+    else {
+        result = 0;
+        populateDisplay("ERROR");
     }
 
-    operationNumber = String(result);
-    console.log("result: ", result)
 
-    if(result > 999999999){
-        result = Number.parseFloat(result).toExponential(3);
-    }
-    else if(String(result).length > 9) {
-        result = String(result).slice(0, 10);
-    }
-
-    populateDisplay(result);
-
+    
     console.log("operationNumber: ", operationNumber)
     console.log("operatorNumber: ", operatorNumber)
     console.log("operatorValue: ", operatorValue)
