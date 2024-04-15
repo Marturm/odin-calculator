@@ -100,7 +100,7 @@ const btnOperators = [btnAdd, btnMultiply, btnSubtract, btnDivide];
 btnOperators.forEach((btn) => {
     btn.addEventListener("click", () => {
         if(operator) {
-            btnEqual.dispatchEvent(new Event('click'))
+            btnEqual.dispatchEvent(new Event('click'));
         }
         operatorValue = btn.getAttribute("data-operator");
         operator = true;
@@ -181,3 +181,64 @@ btnEqual.addEventListener("click", () => {
     console.log("operatorNumber: ", operatorNumber)
     console.log("operatorValue: ", operatorValue)
 });
+
+document.addEventListener("keydown", (e) => {
+    console.log(e.key);
+    switch(e.key) {
+        case 'Escape':
+            btnAC.dispatchEvent(new Event('click'));
+            break;
+        case 'Backspace':
+            btnBack.dispatchEvent(new Event('click'));
+            break;
+        case '9':
+            btnNine.dispatchEvent(new Event('click'));
+            break;
+        case '8':
+            btnEight.dispatchEvent(new Event('click'));
+            break;
+        case '7':
+            btnSeven.dispatchEvent(new Event('click'));
+            break;            
+        case '6':
+            btnSix.dispatchEvent(new Event('click'));
+            break;
+        case '5':
+            btnFive.dispatchEvent(new Event('click'));
+            break;
+        case '4':
+            btnFour.dispatchEvent(new Event('click'));
+            break;
+        case '3':
+            btnThree.dispatchEvent(new Event('click'));
+            break;
+        case '2':
+            btnTwo.dispatchEvent(new Event('click'));
+            break;
+        case '1':
+            btnOne.dispatchEvent(new Event('click'));
+            break;
+        case '0':
+            btnZero.dispatchEvent(new Event('click'));
+            break;
+        case '.':
+            btnPoint.dispatchEvent(new Event('click'));
+            break;
+        case '+':
+            btnAdd.dispatchEvent(new Event('click'));
+            break;
+        case '*':
+            btnMultiply.dispatchEvent(new Event('click'));
+            break;
+        case '-':
+            btnSubtract.dispatchEvent(new Event('click'));
+            break;
+        case '/':
+            btnDivide.dispatchEvent(new Event('click'));
+            break;
+        case '=':
+        case "Enter":
+            btnEqual.dispatchEvent(new Event('click'));
+            break;
+    }
+})
