@@ -1,4 +1,4 @@
-let currentNumber = null, 
+let currentNumber = 0, 
     operationNumber = null, 
     operatorNumber = null,
     operator = false, 
@@ -12,7 +12,7 @@ function populateDisplay(displayValue) {
 
 const btnAC = document.querySelector(".button-ac");
 btnAC.addEventListener("click", () => {
-    currentNumber = null, 
+    currentNumber = 0, 
     operationNumber = null, 
     operatorNumber = null,
     operator = false, 
@@ -32,18 +32,31 @@ const btnThree = document.querySelector(".button-three");
 const btnTwo = document.querySelector(".button-two");
 const btnOne = document.querySelector(".button-one");
 const btnZero = document.querySelector(".button-zero");
-const btnNumbers = [btnZero, btnOne, btnTwo, btnThree, btnFour, btnFive, btnSix, btnSeven, btnEight, btnNine];
+const btnPoint = document.querySelector('.button-point');
+const btnNumbers = [btnZero, btnOne, btnTwo, btnThree, btnFour, btnFive, btnSix, btnSeven, btnEight, btnNine, btnPoint];
 
 btnNumbers.forEach((btn) => {
     btn.addEventListener("click", () => {
         let enteredNumber = btn.getAttribute("data-number");
-
-        if(currentNumber === null || currentNumber == 0) {
-            currentNumber = enteredNumber;
+        
+        if(enteredNumber != '.'){
+            if((currentNumber === null || currentNumber == 0) && String(currentNumber).indexOf('.') == -1) {
+                currentNumber = enteredNumber;
+            }
+            else if(String(currentNumber).length < 9){
+                currentNumber += enteredNumber;
+            }
         }
-        else if(currentNumber.length < 9){
-            currentNumber += enteredNumber;
+        else if(String(currentNumber).indexOf('.') == -1) {
+            if(currentNumber == 0 && enteredNumber == '.'){
+                currentNumber += enteredNumber;
+            }
+            else {
+                currentNumber += enteredNumber;
+            }
         }
+        else console.log(123)
+        
         populateDisplay(currentNumber);
 
         if(!operator) {
@@ -56,6 +69,8 @@ btnNumbers.forEach((btn) => {
         }
     });
 });
+
+
 
 const btnAdd = document.querySelector(".button-add");
 const btnMultiply = document.querySelector(".button-multiply");
@@ -131,19 +146,18 @@ btnEqual.addEventListener("click", () => {
         }
 
         operationNumber = String(result);
-        console.log("result: ", result)
-
+        
         if(result > 999999999){
             result = Number.parseFloat(result).toExponential(3);
         }
         else if(String(result).length > 9) {
             result = String(result).slice(0, 10);
         }
-        else {
-            populateDisplay(result);
-        }
-    }
     
+        populateDisplay(result);
+    }
+
+    console.log("result: ", result)
     console.log("operationNumber: ", operationNumber)
     console.log("operatorNumber: ", operatorNumber)
     console.log("operatorValue: ", operatorValue)
